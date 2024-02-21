@@ -7,6 +7,5 @@ docker-compose up -d db # Start the database specifically (MOSTLY USED FOR TESTI
 
 
 TO DO:
-    Setup pgAdmin to view SQL Data in PostgreSQL
-    Setup some basic Tables w/ Data so taht we can start OMS development
-    
+    Create initial data that should be added from 02_Init_insert.sql
+    Create routes/controllers inside the OMS Backend
