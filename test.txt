@@ -1,1 +1,12 @@
-hello world
+docker-compose build - Build the application
+docker-compose up - Start the application
+docker-compose down -v Stop the application; remove all volumes (Postgre)
+
+
+docker-compose up -d db # Start the database specifically (MOSTLY USED FOR TESTING)
+
+
+TO DO:
+    Setup pgAdmin to view SQL Data in PostgreSQL
+    Setup some basic Tables w/ Data so taht we can start OMS development
+    

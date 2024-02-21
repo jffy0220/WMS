@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+package-lock.json
+
+# Docker
+**/node_modules
+**/npm_debug.log
+Dockerfile
+docker-compose.yml
+.env
+.env.*
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+
+# Editor directories and files
+.vscode/
+.idea/
