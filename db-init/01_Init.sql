@@ -1,3 +1,6 @@
+-- ENABLE PGCRYPTO
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 -------------------------------------------------------------
 -- Addresses 
 -------------------------------------------------------------
@@ -66,7 +69,7 @@ CREATE TABLE Customers (
 -- Orders
 -------------------------------------------------------------
 CREATE TABLE Orders (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     orderNumber VARCHAR(255),
     created TIMESTAMP,
     customerId UUID,
