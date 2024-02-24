@@ -44,9 +44,41 @@ exports.getAllOrders = async (req, res) => {
 }
 
 exports.updateOrder = async (req, res) => {
-    res.send('Not implemented yet');
+    const { orderId } = req.params;
+    const updateFields = req.body;
+
+    try {
+
+        const updatedOrder = await Order.update(orderId, updateFields);
+
+        if (updatedOrder) {
+            res.json({
+                message: 'Order Updated Successfully',
+                order: updatedOrder
+            })
+        } else {
+            res.status(404).json({ message: "Order not found" });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating order' });
+    }
 }
 
 exports.deleteOrder = async (req, res) => {
-    res.send('Not implemented yet');
+    const { orderId } = req.params;
+
+    try {
+
+        const deletedOrder = await Order.delete(orderId);
+
+        if (deletedOrder) {
+            return res.status(201).json({ message: 'Order successfully deleted' });
+        } else {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting order' });
+    }
 }
