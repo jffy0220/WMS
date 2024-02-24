@@ -1,11 +1,11 @@
 -- ENABLE PGCRYPTO
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -------------------------------------------------------------
 -- Addresses 
 -------------------------------------------------------------
 CREATE TABLE Addresses (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     addressOne VARCHAR(255),
     addressTwo VARCHAR(255),
     city VARCHAR(255),
@@ -18,9 +18,9 @@ CREATE TABLE Addresses (
 -- Roles
 -------------------------------------------------------------
 CREATE TABLE Roles (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     createdBy UUID
 );
 
@@ -28,10 +28,10 @@ CREATE TABLE Roles (
 -- Users
 -------------------------------------------------------------
 CREATE TABLE Users (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     firstName VARCHAR(50),
     lastName VARCHAR(50),
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     roleId UUID,
     positionName VARCHAR(50),
     lastLogin TIMESTAMP,
@@ -43,10 +43,10 @@ CREATE TABLE Users (
 -- Permissions
 -------------------------------------------------------------
 CREATE TABLE Permissions (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     roleId UUID,
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     createdBy UUID
 );
 
@@ -54,10 +54,10 @@ CREATE TABLE Permissions (
 -- Customers
 -------------------------------------------------------------
 CREATE TABLE Customers (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     firstName TEXT,
     lastName TEXT,
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     addressId UUID,
     phoneOne VARCHAR(50),
     phoneTwo VARCHAR(50),
@@ -69,9 +69,9 @@ CREATE TABLE Customers (
 -- Orders
 -------------------------------------------------------------
 CREATE TABLE Orders (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     orderNumber VARCHAR(255),
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     customerId UUID,
     salesChannelId UUID,
     shippingId UUID,
@@ -82,14 +82,14 @@ CREATE TABLE Orders (
 -- Sales Channel
 -------------------------------------------------------------
 CREATE TABLE SalesChannel (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     type VARCHAR(50),
     description TEXT,
     url VARCHAR(100),
     contactInfo VARCHAR(255),
     status VARCHAR(100),
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     managerId UUID
 );
 
@@ -97,7 +97,7 @@ CREATE TABLE SalesChannel (
 -- Shipping
 -------------------------------------------------------------
 CREATE TABLE Shipping (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     orderId UUID,
     carrierName VARCHAR(100),
     trackingNumber VARCHAR(255),
@@ -112,7 +112,7 @@ CREATE TABLE Shipping (
     weight INT,
     dimensions VARCHAR(25),
     notes TEXT,
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     updated TIMESTAMP,
     updatedBy UUID
 );
@@ -122,7 +122,7 @@ CREATE TABLE Shipping (
 -- Products
 -------------------------------------------------------------
 CREATE TABLE Products (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     description TEXT,
     price VARCHAR(255),
@@ -134,11 +134,11 @@ CREATE TABLE Products (
 -- Product Category
 -------------------------------------------------------------
 CREATE TABLE ProductCategory (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     description TEXT,
     parentCategoryId UUID NULL, -- Adding in NULL here because some categories wont have parent categories
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     createdBy UUID
 );
 
@@ -146,7 +146,7 @@ CREATE TABLE ProductCategory (
 -- Inventory
 -------------------------------------------------------------
 CREATE TABLE Inventory (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     productId UUID,
     quantityAvailable INT,
     restockDate TIMESTAMP,
@@ -158,7 +158,7 @@ CREATE TABLE Inventory (
 -- Suppliers
 -------------------------------------------------------------
 CREATE TABLE Suppliers (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     phoneOne VARCHAR(25),
     phoneTwo VARCHAR(25),
@@ -171,13 +171,13 @@ CREATE TABLE Suppliers (
 -- Order Details
 -------------------------------------------------------------
 CREATE TABLE OrderDetails (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     orderId UUID,
     productId UUID,
     quantity INT,
     unitPrice VARCHAR(25),
     discountId UUID,
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     updated TIMESTAMP,
     updatedBy UUID
 );
@@ -186,7 +186,7 @@ CREATE TABLE OrderDetails (
 -- Payments
 -------------------------------------------------------------
 CREATE TABLE Payments (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     orderId UUID,
     amount VARCHAR(50),
     paymentMethod VARCHAR(255),
@@ -198,27 +198,28 @@ CREATE TABLE Payments (
 -- Returns
 -------------------------------------------------------------
 CREATE TABLE Returns (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     orderId UUID,
     productId UUID,
     reason TEXT,
     quantityReturned UUID,
     refundAmount VARCHAR(50),
-    status VARCHAR(25)
+    status VARCHAR(25),
+    created DATETIME DEFAULT NOW()
 );
 
 -------------------------------------------------------------
 -- Discounts
 -------------------------------------------------------------
 CREATE TABLE Discounts (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     description TEXT,
     discountType VARCHAR(25),
     discountValue VARCHAR(25),
     startDate TIMESTAMP,
     endDate TIMESTAMP,
-    created TIMESTAMP,
+    created TIMESTAMP DEFAULT NOW(),
     createdBy UUID
 );
 
@@ -226,7 +227,7 @@ CREATE TABLE Discounts (
 -- AuditLog
 -------------------------------------------------------------
 CREATE TABLE AuditLog (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     action VARCHAR(255),
     userId UUID,
     timestamp TIMESTAMP,
