@@ -82,3 +82,16 @@ exports.deleteOrder = async (req, res) => {
         res.status(500).json({ message: 'Error deleting order' });
     }
 }
+
+exports.getOrderByCompanyId = async (req, res) => {
+    try {
+        console.log(req.params); // TESTING
+        const order = await Order.findOrdersByCompany(req.params.companyId);
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        res.status(201).json(order);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}

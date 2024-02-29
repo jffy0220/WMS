@@ -40,6 +40,15 @@ CREATE TABLE Users (
 );
 
 -------------------------------------------------------------
+-- Companies
+-------------------------------------------------------------
+CREATE TABLE Companies (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255),
+    created TIMESTAMP DEFAULT NOW()
+);
+
+-------------------------------------------------------------
 -- Permissions
 -------------------------------------------------------------
 CREATE TABLE Permissions (
@@ -205,7 +214,7 @@ CREATE TABLE Returns (
     quantityReturned UUID,
     refundAmount VARCHAR(50),
     status VARCHAR(25),
-    created DATETIME DEFAULT NOW()
+    created TIMESTAMP DEFAULT NOW()
 );
 
 -------------------------------------------------------------
@@ -288,5 +297,13 @@ ALTER TABLE Discounts ADD CONSTRAINT fk_discounts_createdby FOREIGN KEY (created
 
 -- AuditLog
 ALTER TABLE AuditLog ADD CONSTRAINT fk_auditlog_userid FOREIGN KEY (userId) REFERENCES Users(id);
+
+-- Company Users
+ALTER TABLE Users ADD COLUMN companyId UUID;
+ALTER TABLE Users ADD CONSTRAINT fk_users_companyId FOREIGN KEY (companyId) REFERENCES Companies(id);
+
+-- Company Orders
+ALTER TABLE Orders ADD COLUMN companyId UUID;
+ALTER TABLE Orders ADD CONSTRAINT fk_orders_companyId FOREIGN KEY (companyId) REFERENCES Companies(id);
 
 

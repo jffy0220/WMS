@@ -8,13 +8,20 @@ INSERT INTO Roles ( id, name, created ) VALUES
 ('e4f905dc-79a2-4e13-83a3-8e71f1e4b52e', 'User', NOW());
 
 -------------------------------------------------------------
+-- Companies
+-------------------------------------------------------------
+INSERT INTO Companies (id, name, created) VALUES
+('0a7c3915-d892-4b7f-9343-6d05a6ebc290', 'Company A', NOW()),
+('c436ae06-8280-44aa-b3c9-e3f5978e4f3a', 'Company B', NOW());
+
+-------------------------------------------------------------
 -- Users
 -------------------------------------------------------------
-INSERT INTO Users ( id, firstName, lastName, created, roleId, positionName, lastLogin, password, email ) VALUES
-('dc67c823-5c83-4e64-b7dd-55ac7739ca95', 'Justin', 'Farley', NOW(), 'c505d4a0-ee42-49e4-b977-5ba4f3a4ca79', 'Root', NOW(), 'hashed-password', 'justin@test.com'),
-('10d06f1a-bf4e-4efb-b909-940ba9a55b3f', 'Super', 'User', NOW(), 'c505d4a0-ee42-49e4-b977-5ba4f3a4ca79', 'SuperUser', NOW(), 'hashed-password', 'super@user.com'),
-('32525092-9e2d-4eba-ab28-191f75890ad1', 'Warehouse', 'Manager', NOW(), '79fefaff-d4af-4ffb-86bc-f5a180ce5f53', 'WarehouseManager', NOW(), 'hashed-password', 'wh@manager.com'),
-('9de00f75-ac79-4ec0-9974-b5be5a72699a', 'Test', 'User', NOW(), 'e4f905dc-79a2-4e13-83a3-8e71f1e4b52e', 'TUser', NOW(), 'hashed-password', 't@user.com');
+INSERT INTO Users ( id, firstName, lastName, created, roleId, positionName, lastLogin, password, email, companyId ) VALUES
+('dc67c823-5c83-4e64-b7dd-55ac7739ca95', 'Justin', 'Farley', NOW(), 'c505d4a0-ee42-49e4-b977-5ba4f3a4ca79', 'Root', NOW(), 'hashed-password', 'justin@test.com', '0a7c3915-d892-4b7f-9343-6d05a6ebc290'),
+('10d06f1a-bf4e-4efb-b909-940ba9a55b3f', 'Super', 'User', NOW(), 'c505d4a0-ee42-49e4-b977-5ba4f3a4ca79', 'SuperUser', NOW(), 'hashed-password', 'super@user.com', 'c436ae06-8280-44aa-b3c9-e3f5978e4f3a'),
+('32525092-9e2d-4eba-ab28-191f75890ad1', 'Warehouse', 'Manager', NOW(), '79fefaff-d4af-4ffb-86bc-f5a180ce5f53', 'WarehouseManager', NOW(), 'hashed-password', 'wh@manager.com', '0a7c3915-d892-4b7f-9343-6d05a6ebc290'),
+('9de00f75-ac79-4ec0-9974-b5be5a72699a', 'Test', 'User', NOW(), 'e4f905dc-79a2-4e13-83a3-8e71f1e4b52e', 'TUser', NOW(), 'hashed-password', 't@user.com', 'c436ae06-8280-44aa-b3c9-e3f5978e4f3a');
 
 -------------------------------------------------------------
 -- Manage Circular Depdendency for Roles & Users
@@ -95,13 +102,13 @@ INSERT INTO SalesChannel ( id, name, type, description, url, contactInfo, status
 -------------------------------------------------------------
 -- Orders
 -------------------------------------------------------------
-INSERT INTO Orders (id, orderNumber, created, customerId, salesChannelId, shippingId, orderStatus) VALUES
-( '70071dc8-b86d-4c2a-98cd-47744cbbdcf7', 'ABCD-1234', NOW(), '7ccb11f8-913a-4d8b-85f0-2cd651a3a408', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED'),
-( 'c52be51c-0338-4d7c-ad46-cacd3f53ef5b', 'ABCD-2345', NOW(), '2003062a-7c42-4e27-86d0-ef698dfef501', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED'),
-( '79dc9c77-f0ea-47dd-a5f6-79653952f157', 'ABCD-3456', NOW(), '16f46581-ab41-4a29-a765-4e91468ecfa9', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED'),
-( '1ce68f49-7997-411a-870a-8a441c4a785a', 'ABCD-4567', NOW(), '25dfba65-147a-4460-a6af-0c796786360b', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED'),
-( '6ea60ef9-69d1-41d7-afd6-5f60abde1788', 'ABCD-5678', NOW(), 'fb29e9cf-c99d-4f88-8207-6ffc28185560', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED'),
-( '332f6a66-05bc-4e4e-a6be-2d7c97db3ff9', 'ABCD-6789', NOW(), '7ccb11f8-913a-4d8b-85f0-2cd651a3a408', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED');
+INSERT INTO Orders (id, orderNumber, created, customerId, salesChannelId, shippingId, orderStatus, companyId ) VALUES
+( '70071dc8-b86d-4c2a-98cd-47744cbbdcf7', 'ABCD-1234', NOW(), '7ccb11f8-913a-4d8b-85f0-2cd651a3a408', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED', '0a7c3915-d892-4b7f-9343-6d05a6ebc290'),
+( 'c52be51c-0338-4d7c-ad46-cacd3f53ef5b', 'ABCD-2345', NOW(), '2003062a-7c42-4e27-86d0-ef698dfef501', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED', '0a7c3915-d892-4b7f-9343-6d05a6ebc290'),
+( '79dc9c77-f0ea-47dd-a5f6-79653952f157', 'ABCD-3456', NOW(), '16f46581-ab41-4a29-a765-4e91468ecfa9', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED', '0a7c3915-d892-4b7f-9343-6d05a6ebc290'),
+( '1ce68f49-7997-411a-870a-8a441c4a785a', 'ABCD-4567', NOW(), '25dfba65-147a-4460-a6af-0c796786360b', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED', '0a7c3915-d892-4b7f-9343-6d05a6ebc290'),
+( '6ea60ef9-69d1-41d7-afd6-5f60abde1788', 'ABCD-5678', NOW(), 'fb29e9cf-c99d-4f88-8207-6ffc28185560', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED', 'c436ae06-8280-44aa-b3c9-e3f5978e4f3a'),
+( '332f6a66-05bc-4e4e-a6be-2d7c97db3ff9', 'ABCD-6789', NOW(), '7ccb11f8-913a-4d8b-85f0-2cd651a3a408', '5e0f9552-8337-4816-8d0f-55d011128957', null, 'CREATED', 'c436ae06-8280-44aa-b3c9-e3f5978e4f3a');
 
 -------------------------------------------------------------
 -- Shipping

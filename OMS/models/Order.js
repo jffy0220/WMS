@@ -43,6 +43,11 @@ class Order {
     static async delete(id) {
         await pool.query('DELETE FROM Orders WHERE id = $1', [id]);
     }
+
+    static async findOrdersByCompany(companyId) {
+        const { rows } = await pool.query('SELECT * FROM Orders WHERE companyId = $1', [companyId]);
+        return rows.map(row => new Order(row));
+    }
 }
 
 module.exports = Order;
