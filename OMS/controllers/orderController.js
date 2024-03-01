@@ -95,3 +95,21 @@ exports.getOrderByCompanyId = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+exports.getCompleteOrder = async (req, res) => {
+    const { companyId } = req.params;
+    
+    try {
+        console.log(companyId);
+        const orders = await Order.getCompleteOrdersByCompanyId(companyId);
+
+        if (!orders) {
+            return res.status(404).json({ message: "No Orders Found" });
+        }
+
+        res.json(orders);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching order information" });
+    }
+}
